@@ -52,6 +52,6 @@
     "gulp-clean": "0.3.2",
     "gulp-expect-file": "0.0.7",
     "pipeline-test-node": "1.0.1",
-    "pipeline-validate-js": "0.3.0"
+    "pipeline-validate-js": "1.0.0-rc3"
   }
 }
