@@ -1,7 +1,7 @@
 'use strict';
 
 var gulp = require('gulp');
-var autoprefixPlugin = require('less-plugin-autoprefix');
+var AutoprefixPlugin = require('less-plugin-autoprefix');
 var concat = require('gulp-concat');
 var handyman = require('pipeline-handyman');
 var gulpIf = require('gulp-if');
@@ -32,7 +32,7 @@ module.exports = {
 
 function pipelineFactory() {
   var lessPlugins = {};
-  var autoprefix = new autoprefixPlugin(config.plugins.autoprefix);
+  var autoprefix = new AutoprefixPlugin(config.plugins.autoprefix);
   var pipeline;
 
   lessPlugins.plugins = config.autoprefix ? [autoprefix] : [];

@@ -3,6 +3,7 @@
 var gulp = require('gulp');
 var compilePipeline = require('./src/index.js');
 var testPipeline = require('pipeline-test-node');
+var validatePipeline = require('pipeline-validate-js');
 
 var options = {
   plugins: {
@@ -24,14 +25,13 @@ var config = {
   ],
 
   lessFiles: [
-   'test/fixtures/*.less'
+    'test/fixtures/*.less'
   ],
   test: {
     jsFiles: [
-      '*/.js',
+      './*.js',
       'src/**/*.js',
-      'test/*.js',
-      'test/*.*.js'
+      'test/*.js'
     ]
   }
 };
@@ -45,5 +45,6 @@ gulp.task('compile:less', function() {
 gulp.task('build', ['compile:less'], function() {
   return gulp
     .src(config.test.jsFiles)
+    .pipe(validatePipeline.validateJS())
     .pipe(testPipeline.test(options));
 });
