@@ -1,12 +1,23 @@
 'use strict';
 
 var compilePipeline = require('../src/index.js');
+var chai = require('chai');
 var clean = require('gulp-clean');
+var dirtyChai = require('dirty-chai');
 var gulp = require('gulp');
 var path = require('path');
-var expect = require('gulp-expect-file');
+var expect = require('chai').expect;
+var expectFile = require('gulp-expect-file');
+var less = require('gulp-less');
+var sinon = require('sinon');
+var sinonChai = require('sinon-chai');
 
 var altOutputPath = 'tmp';
+var lessSpy;
+
+chai.should();
+chai.use(sinonChai);
+chai.use(dirtyChai);
 
 function getFixtures (glob) {
   return path.join(__dirname, 'fixtures', glob);
@@ -14,6 +25,7 @@ function getFixtures (glob) {
 
 beforeEach(function() {
   clean({force: true});
+  lessSpy = sinon.spy(less);
 });
 
 describe('pipeline-compile-less', function() {
@@ -25,7 +37,7 @@ describe('pipeline-compile-less', function() {
         autoprefix: false,
         addSourceMaps: false
       }))
-      .pipe(expect(['dest/pipeline-compile-less.css']));
+      .pipe(expectFile(['dest/pipeline-compile-less.css']));
     done();
   });
 
@@ -35,7 +47,7 @@ describe('pipeline-compile-less', function() {
       .pipe(compilePipeline.compileLESS({
         addSourceMaps: true
       }))
-      .pipe(expect(['dest/pipeline-compile-less.css', 'dest/pipeline-compile-less.css.map']));
+      .pipe(expectFile(['dest/pipeline-compile-less.css', 'dest/pipeline-compile-less.css.map']));
     done();
   });
 
@@ -47,7 +59,21 @@ describe('default options', function() {
 
     gulp.src(getFixtures('*'))
       .pipe(compilePipeline.compileLESS())
-      .pipe(expect(['dest/pipeline-compile-less.css', 'dest/pipeline-compile-less.css.map']));
+      .pipe(expectFile(['dest/pipeline-compile-less.css', 'dest/pipeline-compile-less.css.map']));
+    done();
+  });
+
+});
+
+describe('autoprefixer default options', function() {
+
+  it('Should call the gulp-less function', function (done) {
+
+    //TODO lazypipe is not allowing the gulp-less function to be tested, devise method to expose this for testing - .pipe(expectFile(lessSpy).to.have.been.called())
+    gulp.src(getFixtures('*'))
+      .pipe(compilePipeline.compileLESS({
+        autoprefix: true
+      }));
     done();
   });
 
@@ -62,7 +88,7 @@ describe('output to a specified directory', function() {
         outputDirectory: altOutputPath,
         output: altOutputPath
       }))
-      .pipe(expect(['tmp/pipeline-compile-less.css.map', 'tmp/pipeline-compile-less.css']));
+      .pipe(expectFile(['tmp/pipeline-compile-less.css.map', 'tmp/pipeline-compile-less.css']));
     done();
   });
 
@@ -78,7 +104,7 @@ describe('output to another filename', function() {
         outputDirectory: altOutputPath,
         output: altOutputPath
       }))
-      .pipe(expect(['tmp/test-filename.css.map', 'tmp/test-filename.css']));
+      .pipe(expectFile(['tmp/test-filename.css.map', 'tmp/test-filename.css']));
     done();
   });
 
@@ -98,7 +124,7 @@ describe('concatenation set to false', function() {
         addSourceMaps: false,
         concatCSS: false
       }))
-      .pipe(expect(['test/fixtures/test-less1.css', 'test/fixtures/test-less2.css']));
+      .pipe(expectFile(['test/fixtures/test-less1.css', 'test/fixtures/test-less2.css']));
     done();
   });
 
