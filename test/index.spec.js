@@ -1,23 +1,12 @@
 'use strict';
 
 var compilePipeline = require('../src/index.js');
-var chai = require('chai');
 var clean = require('gulp-clean');
-var dirtyChai = require('dirty-chai');
 var gulp = require('gulp');
 var path = require('path');
-var expect = require('chai').expect;
 var expectFile = require('gulp-expect-file');
-var less = require('gulp-less');
-var sinon = require('sinon');
-var sinonChai = require('sinon-chai');
 
 var altOutputPath = 'tmp';
-var lessSpy;
-
-chai.should();
-chai.use(sinonChai);
-chai.use(dirtyChai);
 
 function getFixtures (glob) {
   return path.join(__dirname, 'fixtures', glob);
@@ -25,7 +14,6 @@ function getFixtures (glob) {
 
 beforeEach(function() {
   clean({force: true});
-  lessSpy = sinon.spy(less);
 });
 
 describe('pipeline-compile-less', function() {
@@ -69,7 +57,7 @@ describe('autoprefixer default options', function() {
 
   it('Should call the gulp-less function', function (done) {
 
-    //TODO lazypipe is not allowing the gulp-less function to be tested, devise method to expose this for testing - .pipe(expectFile(lessSpy).to.have.been.called())
+    // TODO lazypipe is not allowing the gulp-less function to be tested, devise method to expose this for testing - .pipe(expectFile(lessSpy).to.have.been.called())
     gulp.src(getFixtures('*'))
       .pipe(compilePipeline.compileLESS({
         autoprefix: true
