@@ -5,7 +5,7 @@
 
 | Package       | Description   | Version|
 | ------------- |:-------------:| -----:|
-| pipeline-compile-less| This pipeline compiles LESS files and returns CSS files | 1.0.0 |
+| pipeline-compile-less| This pipeline compiles LESS files and returns CSS files | 1.0.1 |
 
 # Overview
 
