@@ -24,7 +24,7 @@ var config = {
 module.exports = {
   compileLESS: function(options) {
     if (options) {
-      config = handyman.mergeConf(config, options);
+      config = handyman.mergeConfig(config, options);
     }
     return pipelineFactory();
   }

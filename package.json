@@ -13,6 +13,9 @@
       "email": "csharon@kenzan.com"
     }
   ],
+  "scripts": {
+    "test": "mocha test/index.spec.js -w"
+  },
   "main": "src/index.js",
   "repository": {
     "type": "git",
@@ -37,20 +40,20 @@
   "analyze": true,
   "license": "Apache-2.0",
   "dependencies": {
-    "gulp-concat": "2.6.0",
-    "gulp-if": "2.0.0",
-    "gulp-less": "3.0.3",
+    "gulp-concat": "2.6.1",
+    "gulp-if": "2.0.2",
+    "gulp-less": "3.3.0",
     "gulp-less-reporter": "0.0.3",
-    "gulp-sourcemaps": "1.6.0",
+    "gulp-sourcemaps": "2.2.3",
     "lazypipe": "1.0.1",
     "less-plugin-autoprefix": "1.5.1",
-    "pipeline-handyman": "0.3.0"
+    "pipeline-handyman": "1.0.0"
   },
   "devDependencies": {
-    "gulp": "3.9.0",
+    "gulp": "3.9.1",
     "gulp-clean": "0.3.2",
     "gulp-expect-file": "0.0.7",
     "pipeline-test-node": "1.0.1",
-    "pipeline-validate-js": "1.0.0-rc3"
+    "pipeline-validate-js": "1.0.0-rc4"
   }
 }
